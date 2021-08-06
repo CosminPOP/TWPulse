@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: TW Pulse
+## Author: Xerron/Er
+## Version: 1.0.0.0
+## Notes: Cooldown Pulse
+# SavedVariables: TWPB_HP, TWPB_P
+TWPulse.xml
