@@ -18,7 +18,7 @@ TWP.scan:SetScript("OnShow", function()
     this.startTime = GetTime()
 end)
 TWP.scan:SetScript("OnUpdate", function()
-    local plus = 0.5 --seconds
+    local plus = 0.1 --seconds
     local gt = GetTime() * 1000
     local st = (this.startTime + plus) * 1000
     if gt >= st then
@@ -33,7 +33,7 @@ TWP.scan:SetScript("OnUpdate", function()
 
             local start, duration, enabled = GetSpellCooldown(id, BOOKTYPE_SPELL);
             local cd = start + duration - GetTime()
-                if cd > 1.5 then
+                if cd > 1.7 then
                     TWP.tracked[spellName] = id
                 end
             end
@@ -42,7 +42,7 @@ TWP.scan:SetScript("OnUpdate", function()
         for name, id in next, TWP.tracked do
             if id then
                 local start, duration, enabled = GetSpellCooldown(id, BOOKTYPE_SPELL);
-                local cd = math.floor(start + duration - GetTime())
+                local cd = start + duration - GetTime()
 
                 if cd <= 0 then
                     TWP.tracked[name] = nil
