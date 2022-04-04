@@ -10,7 +10,7 @@
             <Anchor point="CENTER"/>
         </Anchors>
         <Layers>
-            <Layer level="BORDER">
+            <Layer level="BACKGROUND">
                 <Texture name="$parentIcon">
                     <Size>
                         <AbsDimension x="125" y="125"/>
@@ -31,7 +31,7 @@
     </Frame>
 
     <Frame name="TWPulse" hidden="true" toplevel="true"
-           parent="UIParent" movable="true" enableMouse="true" resizable="false">
+           parent="UIParent" movable="true" enableMouse="false" resizable="false">
         <Size>
             <AbsDimension x="125" y="125"/>
         </Size>

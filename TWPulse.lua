@@ -5,7 +5,8 @@ TWP:RegisterEvent("ADDON_LOADED")
 TWP:SetScript("OnEvent", function()
     if event then
         if event == "ADDON_LOADED" and arg1 == 'TWPulse' then
-        TWP.scan:Show()
+            TWPulse:EnableMouse(false)
+            TWP.scan:Show()
         end
     end
 end)
@@ -31,22 +32,22 @@ TWP.scan:SetScript("OnUpdate", function()
 
             if (spellName) then
 
-            local start, duration, enabled = GetSpellCooldown(id, BOOKTYPE_SPELL);
-            local cd = start + duration - GetTime()
+                local start, duration, enabled = GetSpellCooldown(id, BOOKTYPE_SPELL);
+                local cd = start + duration - GetTime()
                 if cd > 1.7 then
                     TWP.tracked[spellName] = id
                 end
             end
         end
 
-        for name, id in next, TWP.tracked do
-            if id then
-                local start, duration, enabled = GetSpellCooldown(id, BOOKTYPE_SPELL);
+        for name, spellId in next, TWP.tracked do
+            if spellId then
+                local start, duration, enabled = GetSpellCooldown(spellId, BOOKTYPE_SPELL);
                 local cd = start + duration - GetTime()
 
                 if cd <= 0 then
                     TWP.tracked[name] = nil
-                    local tEx = string.split(GetSpellTexture(id, BOOKTYPE_SPELL), '\\')
+                    local tEx = string.split(GetSpellTexture(spellId, BOOKTYPE_SPELL), '\\')
                     local tex = tEx[table.getn(tEx)]
                     TWP.animateQueue[tex] = 1
                     TWP.animation:Show()
@@ -80,7 +81,7 @@ TWP.animation:SetScript("OnUpdate", function()
             if alpha then
 
                 if not TWP.animationFrames[tex] then
-                    TWP.animationFrames[tex] = CreateFrame("Frame", "TWP_" .. tex, getglobal("TWPulse"), "TWPulseTemplate")
+                    TWP.animationFrames[tex] = CreateFrame("Frame", "TWP_" .. tex, TWPulse, "TWPulseTemplate")
                 end
 
                 getglobal("TWP_" .. tex .. "Icon"):SetTexture("Interface\\Icons\\" .. tex)
@@ -103,9 +104,9 @@ TWP.animation:SetScript("OnUpdate", function()
 
         if TWP.locked then
             if _tablesize(TWP.animateQueue) > 0 then
-                getglobal('TWPulse'):Show()
+                TWPulse:Show()
             else
-                getglobal('TWPulse'):Hide()
+                TWPulse:Hide()
             end
         end
 
@@ -120,8 +121,9 @@ SLASH_TWPLOCK1 = "/twplock"
 SlashCmdList["TWPLOCK"] = function(cmd)
     if cmd then
         TWP.locked = true
-        getglobal('TWPulseUnlock'):Hide()
-        getglobal('TWPulse'):Hide()
+        TWPulseUnlock:Hide()
+        TWPulse:Hide()
+        TWPulse:EnableMouse(false)
     end
 end
 
@@ -129,8 +131,9 @@ SLASH_TWPUNLOCK1 = "/twpunlock"
 SlashCmdList["TWPUNLOCK"] = function(cmd)
     if cmd then
         TWP.locked = false
-        getglobal('TWPulseUnlock'):Show()
-        getglobal('TWPulse'):Show()
+        TWPulseUnlock:Show()
+        TWPulse:Show()
+        TWPulse:EnableMouse(true)
     end
 end
 
